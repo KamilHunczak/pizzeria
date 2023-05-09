@@ -53,6 +53,20 @@ const select = {
   };
 
   const app = {
+    initMenu: function(){
+      const thisApp = this;
+
+      for(let productData in thisApp.data.products){
+        new Product(productData, thisApp.data.products[productData]);
+      }
+    },
+
+    initData: function(){
+      const thisApp = this;
+
+      thisApp.data = dataSource;
+    },
+
     init: function(){
       const thisApp = this;
       console.log('*** App starting ***');
@@ -60,8 +74,32 @@ const select = {
       console.log('classNames:', classNames);
       console.log('settings:', settings);
       console.log('templates:', templates);
+
+      app.initData();
+      app.initMenu();
     },
   };
+
+  class Product{
+    constructor(id, data){
+      const thisProduct = this;
+
+      thisProduct.id = id;
+      thisProduct.data = data;
+
+      thisProduct.renderInMenu();
+      console.log(thisProduct);
+    }
+    renderInMenu(){
+      const thisProduct = this;
+      console.log(thisProduct);
+
+      /* generate HTML based on template */
+      /* create element using utilis.createElementFromHTML */
+      /* find menu container */
+      /* add element to menu */
+    }
+  }
 
   app.init();
 }
