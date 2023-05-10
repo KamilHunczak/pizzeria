@@ -92,12 +92,19 @@ const select = {
     }
     renderInMenu(){
       const thisProduct = this;
-      console.log(thisProduct);
 
       /* generate HTML based on template */
+      const generatedHTML = templates.menuProduct(thisProduct.data);
+
       /* create element using utilis.createElementFromHTML */
+      // const generatedDOM = utils.createDOMFromHTML(generatedHTML);
+
       /* find menu container */
+      const container = document.getElementById('product-list');
+
       /* add element to menu */
+      // container.appendChild(generatedDOM);
+      container.insertAdjacentHTML('beforeend', generatedHTML);
     }
   }
 
