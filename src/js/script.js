@@ -86,8 +86,10 @@ const select = {
 
       thisProduct.id = id;
       thisProduct.data = data;
+      // thisProduct.DOM = generatedDOM;
 
       thisProduct.renderInMenu();
+      thisProduct.initAccorion();
       console.log(thisProduct);
     }
     renderInMenu(){
@@ -97,14 +99,27 @@ const select = {
       const generatedHTML = templates.menuProduct(thisProduct.data);
 
       /* create element using utilis.createElementFromHTML */
-      // const generatedDOM = utils.createDOMFromHTML(generatedHTML);
+      const generatedDOM = utils.createDOMFromHTML(generatedHTML);
 
       /* find menu container */
       const container = document.getElementById('product-list');
 
       /* add element to menu */
-      // container.appendChild(generatedDOM);
-      container.insertAdjacentHTML('beforeend', generatedHTML);
+      container.appendChild(generatedDOM);
+      // container.insertAdjacentHTML('beforeend', generatedHTML);
+    }
+    initAccorion(){
+      const thisProduct = this;
+      console.log(thisProduct.DOM);
+
+      const activeProducts = document.querySelectorAll(select.all.menuProductsActive);
+      const clickableElements = document.querySelectorAll(select.menuProduct.clickable);
+      console.log(clickableElements);
+
+      for (const activeProduct of activeProducts){
+        activeProduct.classList.remove(classNames.menuProduct.wrapperActive);
+
+      }
     }
   }
 
