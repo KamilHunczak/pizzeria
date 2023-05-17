@@ -233,26 +233,56 @@
       // update calculated price in the HTML
       thisProduct.dom.priceElem.innerHTML = price;
     }
+    prepereCartProductParams(){
+      const thisProduct = this;
+
+      // covert form to object structure e.g. { sauce: ['tomato'], toppings: ['olives', 'redPeppers']}
+      const formData = utils.serializeFormToObject(thisProduct.dom.form);
+
+      const params = {};
+
+      // for every category (param)...
+      for(let paramId in thisProduct.data.params) {
+        // determine param value, e.g. paramId = 'toppings', param = { label: 'Toppings', type: 'checkboxes'... }
+        const param = thisProduct.data.params[paramId];
+
+        params[paramId] = {
+          label: param.label,
+          options: {},
+        }
+        // for every option in this category
+        for(let optionId in param.options) {
+
+          // determine option value, e.g. optionId = 'olives', option = { label: 'Olives', price: 2, default: true }
+          const option = param.options[optionId];
+
+          // IF option selected add option to productParamsObj
+          if (formData[paramId].includes(optionId)){
+            params[paramId].options[optionId] = option.label;
+          }
+        }
+      }
+
+      return params
+    }
     prepereCartProduct(){
       const thisProduct = this;
 
       thisProduct.productSummary = {};
       //name, total price, amoundm, option, product price, product id,
 
-      // console.log(thisProduct);
       thisProduct.productSummary.id = thisProduct.id;
       thisProduct.productSummary.name = thisProduct.data.name;
       thisProduct.productSummary.amount = thisProduct.amountWidget.value;
       thisProduct.productSummary.priceSingle = thisProduct.priceSingle;
       thisProduct.productSummary.price = thisProduct.priceSingle * thisProduct.productSummary.amount;
-      thisProduct.productSummary.params = {};
+      thisProduct.productSummary.params = thisProduct.prepereCartProductParams();
 
-      // console.log(thisProduct.productSummary);
       return thisProduct.productSummary;
     }
-
     addToCart(){
       const thisProduct = this;
+
       app.cart.add(thisProduct.prepereCartProduct());
     }
   }
@@ -334,6 +364,8 @@
 
       thisCart.dom.wrapper = element;
       thisCart.dom.toggleTrigger = element.querySelector(select.cart.toggleTrigger);
+      thisCart.dom.productList = element.querySelector(select.cart.productList);
+      console.log(thisCart.dom.productList);
     }
     initActions(){
       const thisCart = this;
@@ -343,9 +375,15 @@
       })
     }
     add(menuProduct){
-      // const thisCart = this;
+      const thisCart = this;
 
-      console.log('adding product', menuProduct);
+      const generatedHTML = templates.cartProduct(menuProduct);
+
+      const generetedDOM = utils.createDOMFromHTML(generatedHTML);
+
+      thisCart.dom.productList.appendChild(generetedDOM);
+
+      thisCart.products.push(menuProduct);
     }
   }
 
