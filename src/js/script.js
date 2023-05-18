@@ -383,17 +383,51 @@
 
       thisCart.dom.productList.appendChild(generetedDOM);
 
-      thisCart.products.push(menuProduct);
+      thisCart.products.push(new CartProduct(menuProduct, generetedDOM));
+      console.log(thisCart);
+
     }
   }
 
-  // class CartProduct {
-  //   constructor(){
-  //     const thisCartProduct = this;
+  class CartProduct {
+    constructor(menuProduct, element){
+      const thisCartProduct = this;
 
-  //     console.log(thisCartProduct);
-  //   }
-  // }
+      console.log(menuProduct);
+      thisCartProduct.amount = menuProduct.amount;
+      thisCartProduct.id = menuProduct.id;
+      thisCartProduct.name = menuProduct.name;
+      thisCartProduct.params = menuProduct.params;
+      thisCartProduct.price = menuProduct.price;
+      thisCartProduct.priceSingle = menuProduct.priceSingle;
+
+      thisCartProduct.getElements(element);
+      thisCartProduct.initAmountWidget();
+      console.log(thisCartProduct);
+    }
+    getElements(element){
+      const thisCartProduct = this;
+
+      thisCartProduct.dom = {};
+      thisCartProduct.dom.wrapper = element;
+      thisCartProduct.dom.amountWidget = thisCartProduct.dom.wrapper.querySelector(select.cartProduct.amountWidget);
+      thisCartProduct.dom.price  = thisCartProduct.dom.wrapper.querySelector(select.cartProduct.price);
+      thisCartProduct.dom.edit  = thisCartProduct.dom.wrapper.querySelector(select.cartProduct.edit);
+      thisCartProduct.dom.remove  = thisCartProduct.dom.wrapper.querySelector(select.cartProduct.remove);
+    }
+    initAmountWidget(){
+      const thisCartProduct = this;
+
+      thisCartProduct.amountWidget = new AmountWidget(thisCartProduct.dom.amountWidget);
+      thisCartProduct.dom.amountWidget.addEventListener('updated', function(){
+        thisCartProduct.amount = thisCartProduct.amountWidget.value;
+        thisCartProduct.price = thisCartProduct.priceSingle * thisCartProduct.amount;
+        thisCartProduct.dom.price.innerHTML = thisCartProduct.price;
+      })
+    }
+
+
+  }
 
   const app = {
     initData: function(){
