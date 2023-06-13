@@ -44,6 +44,11 @@
       peopleAmount: '.people-amount',
       hoursAmount: '.hours-amount',
       tables: '.floor-plan .table',
+      starter: '[name="starter"]',
+      bookingSubmit: '.order-confirmation [type="submit"]',
+      phone: '.order-confirmation [name="phone"]',
+      address: '.order-confirmation [name="address"]',
+      tableChosen: '.chosen',
     },
     nav: {
       links: '.main-nav a',
@@ -57,7 +62,7 @@
       deliveryFee: '.cart__order-delivery .cart__order-price-sum strong',
       form: '.cart__order',
       formSubmit: '.cart__order [type="submit"]',
-      phone: '[name="phone"]',
+      phone: 'cart__order-confirmation [name="phone"]',
       address: '[name="address"]',
     },
     cartProduct: {
@@ -79,6 +84,10 @@
     booking: {
       loading: 'loading',
       tableBooked: 'booked',
+      table: 'table',
+      tableChosen: 'chosen',
+      hourPicker: 'hour-picker',
+      datePicker: 'date-picker',
     },
     nav: {
         active: 'active',
@@ -98,7 +107,7 @@
       defaultDeliveryFee: 20,
     },
     db: {
-      url: '//localhost:3131',
+      url: '//' + window.location.hostname + (window.location.hostname=='localhost' ? ':3131' : ''),
       products: 'products',
       orders: 'orders',
       booking: 'bookings',

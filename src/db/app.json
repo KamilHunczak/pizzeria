@@ -206,9 +206,9 @@
     "events": [
       {
         "id": 1,
-        "date": "2021-01-01",
+        "date": "2023-06-10",
         "hour": "12:30",
-        "table": 1,
+        "table": 2,
         "repeat": false,
         "duration": 4,
         "ppl": 3,
@@ -262,7 +262,7 @@
          "hour": "12:30",
          "table": 1,
          "repeat": false,
-         "duration": 4,
+         "duration": 3,
          "ppl": 3,
          "starters": []
        }
